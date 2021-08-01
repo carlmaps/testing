@@ -26,10 +26,15 @@ api = Api(app)
 
 CSV_FILE = 'assets/movieLens.csv'
 
-# class Home(Resource):
-#     def get(self):
-#          html = f"<h1> Factors of are</h1>"
-#          return render_template('index.html')
+global mvConfig
+mvConfig = MovieRecommenderSetting()
+global kerasModel
+kerasModel = mvConfig.loadNNModel()
+# global svdModel
+# svdModel =  mvConfig.loadSVDModel()
+global svdengine
+svdengine = SVDEngine(mvConfig.ratingDF)
+    
 
 @app.route('/')
 def home():
@@ -78,12 +83,12 @@ api.add_resource(NeuralNetRating, '/nnrating')
 
 if __name__ == "__main__":
     logger.info("Starting up the Movie Recommender API: ")
-    global mvConfig
-    mvConfig = MovieRecommenderSetting()
-    global kerasModel
-    kerasModel = mvConfig.loadNNModel()
-    global svdModel
-    # svdModel =  mvConfig.loadSVDModel()
-    global svdengine
-    svdengine = SVDEngine(mvConfig.ratingDF)
+    # global mvConfig
+    # mvConfig = MovieRecommenderSetting()
+    # global kerasModel
+    # kerasModel = mvConfig.loadNNModel()
+    # global svdModel
+    # # svdModel =  mvConfig.loadSVDModel()
+    # global svdengine
+    # svdengine = SVDEngine(mvConfig.ratingDF)
     app.run(debug=False)
