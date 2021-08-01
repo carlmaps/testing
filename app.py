@@ -5,7 +5,7 @@ from kerasEngine import RecommenderNet
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 from flask_restful import Resource, Api
-from surprise import dump
+# from surprise import dump
 import os
 import collections
 import tensorflow as tf
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     mvConfig = MovieRecommenderSetting()
     global kerasModel
     kerasModel = mvConfig.loadNNModel()
-    # global svdModel
+    global svdModel
     # svdModel =  mvConfig.loadSVDModel()
     global svdengine
     svdengine = SVDEngine(mvConfig.ratingDF)
