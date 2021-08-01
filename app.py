@@ -82,8 +82,8 @@ if __name__ == "__main__":
     mvConfig = MovieRecommenderSetting()
     global kerasModel
     kerasModel = mvConfig.loadNNModel()
-    global svdModel
-    svdModel =  mvConfig.loadSVDModel()
+    # global svdModel
+    # svdModel =  mvConfig.loadSVDModel()
     global svdengine
     svdengine = SVDEngine(mvConfig.ratingDF)
     app.run(debug=False)

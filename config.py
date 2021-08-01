@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from surprise import dump
+# from surprise import dump
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model
 
@@ -54,12 +54,12 @@ class MovieRecommenderSetting:
     def __getMovie_encoded2movie(self):
         return self.movie_encoded2movie
 
-    def loadSVDModel(self):
-        logger.info("Loading the Neural Network model")
-        # githubsvdmodel = 'https://github.com/carlmaps/ML-MovieRecommendation/tree/master/assets/SVDmodel2'
-        # _, model = dump.load(githubsvdmodel)
-        _, model = dump.load('assets/SVDmodel2')
-        return  model
+    # def loadSVDModel(self):
+    #     logger.info("Loading the Neural Network model")
+    #     # githubsvdmodel = 'https://github.com/carlmaps/ML-MovieRecommendation/tree/master/assets/SVDmodel2'
+    #     # _, model = dump.load(githubsvdmodel)
+    #     _, model = dump.load('assets/SVDmodel2')
+    #     return  model
     
     def loadNNModel(self):
 
