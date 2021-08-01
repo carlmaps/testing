@@ -42,7 +42,8 @@ class SVDRecommend(Resource):
     def post(self):
         json_data = request.get_json(force=True)
         userid = json_data['userid']
-        return jsonify(svdengine.recommend_movies(userid, mvConfig.movie_df, mvConfig.ratingDF))
+        return jsonify({'movies': svdengine.get_topN(svdModel, userid, mvConfig)})
+        # return jsonify(svdengine.recommend_movies(userid, mvConfig.movie_df, mvConfig.ratingDF))
 
 class SVDRating(Resource):
     def post(self):
