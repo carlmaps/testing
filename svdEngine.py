@@ -65,13 +65,13 @@ class SVDEngine:
         return recomList
         
     
-    # def getRating(self, model, userID, movieID):
-    #     rating = model.predict(userID, movieID)
-    #     return {"rating" : rating.est}
+    def getRating(self, model, userID, movieID):
+        rating = model.predict(userID, movieID)
+        return {"rating" : rating.est}
 
-    def getRating(self, userID, movieID, movies, original_ratings):
-        rating = self.getPredictions(userID, movies, original_ratings)
-        return {"rating" : rating[rating['movieId'] == movieID]['Predictions'].to_list()[0]}
+    # def getRating(self, userID, movieID, movies, original_ratings):
+    #     rating = self.getPredictions(userID, movies, original_ratings)
+    #     return {"rating" : rating[rating['movieId'] == movieID]['Predictions'].to_list()[0]}
 
     def getPredictions(self, userID, movies, original_ratings):
         # Get and sort the user's predictions

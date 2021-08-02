@@ -76,8 +76,8 @@ class SVDRating(Resource):
         json_data = request.get_json(force=True)
         userid = json_data['userid']
         movieid = json_data['movieid']
-        return jsonify(svdengine.getRating(userid, movieid, mvConfig.movie_df, mvConfig.ratingDF))
-        # return jsonify(svdengine.getRating(svdModel, userid, movieid))
+        # return jsonify(svdengine.getRating(userid, movieid, mvConfig.movie_df, mvConfig.ratingDF))
+        return jsonify(svdengine.getRating(svdModel, userid, movieid))
         # return jsonify(getRating(svdModel, userid, movieid))
 
 class NeuralNetRecommend(Resource):
