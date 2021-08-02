@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 from scipy.sparse.linalg import svds
 from flask_caching import Cache
+from surprise import SVD
+from surprise import Dataset
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -31,6 +33,49 @@ class SVDEngine:
 
         logger.info("Getting top 10 Recommendation....")
         
+        # # Get and sort the user's predictions
+        # user_row_number = userID - 1 # User ID starts at 1, not 0
+        # sorted_user_predictions = self.allPredictions.iloc[user_row_number].sort_values(ascending=False) # User ID starts at 1
+        
+        # # Get the user's data and merge in the movie information.
+        # user_data = original_ratings[original_ratings.userId == (userID)]
+        # user_full = (user_data.merge(movies, how = 'left', left_on = 'movieId', right_on = 'movieId').
+        #                 sort_values(['rating'], ascending=False)
+        #             )
+
+        # # Recommend the highest predicted rating movies that the user hasn't seen yet.
+        # recommendations = (movies[~movies['movieId'].isin(user_full['movieId'])].
+        #     merge(pd.DataFrame(sorted_user_predictions).reset_index(), how = 'left',
+        #         left_on = 'movieId',
+        #         right_on = 'movieId').
+        #     rename(columns = {user_row_number: 'Predictions'}).
+        #     sort_values('Predictions', ascending = False).
+        #                 iloc[:num_recommendations, :-1]
+        #                 )
+        # recommendations = recommendations.head(10)
+        # recomList = []
+        # for index, row in recommendations.iterrows():
+        #     recomList.append({"movieID" : row['movieId'],"Title" : row['title'],"Genre" : row['genres']})
+            
+        # return recomList
+
+        recommendations = self.getPredictions(userID, movies, original_ratings).head(10)
+        recomList = []
+        for index, row in recommendations.iterrows():
+            recomList.append({"movieID" : row['movieId'],"Title" : row['title'],"Genre" : row['genres']})
+            
+        return recomList
+        
+    
+    # def getRating(self, model, userID, movieID):
+    #     rating = model.predict(userID, movieID)
+    #     return {"rating" : rating.est}
+
+    def getRating(self, userID, movieID, movies, original_ratings):
+        rating = self.getPredictions(userID, movies, original_ratings)
+        return {"rating" : rating[rating['movieId'] == movieID]['Predictions'].to_list()[0]}
+
+    def getPredictions(self, userID, movies, original_ratings):
         # Get and sort the user's predictions
         user_row_number = userID - 1 # User ID starts at 1, not 0
         sorted_user_predictions = self.allPredictions.iloc[user_row_number].sort_values(ascending=False) # User ID starts at 1
@@ -42,24 +87,14 @@ class SVDEngine:
                     )
 
         # Recommend the highest predicted rating movies that the user hasn't seen yet.
-        recommendations = (movies[~movies['movieId'].isin(user_full['movieId'])].
+        predictions = (movies[~movies['movieId'].isin(user_full['movieId'])].
             merge(pd.DataFrame(sorted_user_predictions).reset_index(), how = 'left',
                 left_on = 'movieId',
                 right_on = 'movieId').
             rename(columns = {user_row_number: 'Predictions'}).
-            sort_values('Predictions', ascending = False).
-                        iloc[:num_recommendations, :-1]
-                        )
-        recommendations = recommendations.head(10)
-        recomList = []
-        for index, row in recommendations.iterrows():
-            recomList.append({"movieID" : row['movieId'],"Title" : row['title'],"Genre" : row['genres']})
-            
-        return recomList
-    
-    def getRating(self, model, userID, movieID):
-        rating = model.predict(userID, movieID)
-        return {"rating" : rating.est}
+            sort_values('Predictions', ascending = False))
+        
+        return predictions
 
     def get_topN(self, model, userID, config):
     

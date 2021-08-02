@@ -8,6 +8,8 @@ import joblib
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model
 import logging
+from surprise import SVD
+from surprise import Dataset
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 EMBEDDING_SIZE = 50
@@ -55,9 +57,9 @@ class MovieRecommenderSetting:
 
     def loadSVDModel(self, filename):
         logger.info("Loading the Neural Network model")
-        # model = joblib.load(open(filename))
+        model = joblib.load(open(filename))
         # # _, model = dump.load('assets/SVDmodel2')
-        # return  model
+        return  model
     
     def loadNNModel(self):
 
