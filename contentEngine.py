@@ -19,7 +19,7 @@ class ContentBased:
         self.ratingDF = ratingDF
         # tfidf_movies_genres = TfidfVectorizer(token_pattern = '[a-zA-Z0-9\-]+')
         # tfidf_movies_genres_matrix = tfidf_movies_genres.fit_transform(self.moviesDF['genres'])
-        tfidf = joblib.load('tfidf.pkl')
+        tfidf = joblib.load('assets/tfidf.pkl')
         self.cosine_sim_movies = linear_kernel(tfidf, tfidf)
 
     def get_recommendations_based_on_genres(self, movie_title, byTitle=True):
