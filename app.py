@@ -5,7 +5,6 @@ from kerasEngine import RecommenderNet
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 from flask_restful import Resource, Api
-# from surprise import dump
 import os
 import collections
 import tensorflow as tf
@@ -25,13 +24,14 @@ cache = Cache(app,config={'CACHE_TYPE': 'simple'})
 api = Api(app)
 
 CSV_FILE = 'assets/movieLens.csv'
+FILENAME = 'assets/SVDModel.sav'
 
 global mvConfig
 mvConfig = MovieRecommenderSetting()
 global kerasModel
 kerasModel = mvConfig.loadNNModel()
-# global svdModel
-# svdModel =  mvConfig.loadSVDModel()
+global svdModel
+svdModel =  mvConfig.loadSVDModel(FILENAME)
 global svdengine
 svdengine = SVDEngine(mvConfig.ratingDF)
     
@@ -47,8 +47,8 @@ class SVDRecommend(Resource):
     def post(self):
         json_data = request.get_json(force=True)
         userid = json_data['userid']
-        return jsonify({'movies': svdengine.get_topN(svdModel, userid, mvConfig)})
-        # return jsonify(svdengine.recommend_movies(userid, mvConfig.movie_df, mvConfig.ratingDF))
+        # return jsonify({'movies': svdengine.get_topN(svdModel, userid, mvConfig)})
+        return jsonify(svdengine.recommend_movies(userid, mvConfig.movie_df, mvConfig.ratingDF))
 
 class SVDRating(Resource):
     def post(self):
@@ -77,7 +77,7 @@ class NeuralNetRating(Resource):
 
 # api.add_resource(Home, '/')
 api.add_resource(SVDRecommend, '/svdrecommend')
-api.add_resource(NeuralNetRecommend, '/nnrecommend')  #/<int:userID>')
+api.add_resource(NeuralNetRecommend, '/nnrecommend')  
 api.add_resource(SVDRating, '/svdrating')
 api.add_resource(NeuralNetRating, '/nnrating')
 
