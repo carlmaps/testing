@@ -29,8 +29,8 @@ global mvConfig
 mvConfig = MovieRecommenderSetting()
 global kerasModel
 kerasModel = mvConfig.loadNNModel()
-global svdModel
-svdModel =  mvConfig.loadSVDModel(FILENAME)
+# global svdModel
+# svdModel =  mvConfig.loadSVDModel(FILENAME)
 global svdengine
 svdengine = SVDEngine(mvConfig.ratingDF)
     
