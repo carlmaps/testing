@@ -31,8 +31,8 @@ global svdModel
 svdModel =  mvConfig.loadSVDModel(FILENAME)
 global svdengine
 svdengine = SVDEngine(mvConfig.ratingDF)
-global cbEngine
-cbEngine = ContentBased(mvConfig.movie_df, mvConfig.ratingDF)
+# global cbEngine
+# cbEngine = ContentBased(mvConfig.movie_df, mvConfig.ratingDF)
     
 
 @app.route('/')
