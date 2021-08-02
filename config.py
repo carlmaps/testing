@@ -55,7 +55,7 @@ class MovieRecommenderSetting:
 
     def loadSVDModel(self, filename):
         logger.info("Loading the Neural Network model")
-        model = joblib.load(open(filename))
+        model = joblib.load(filename)
         # # _, model = dump.load('assets/SVDmodel2')
         return  model
     
