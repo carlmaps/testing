@@ -4,10 +4,9 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-import pickle
+import joblib
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model
-
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -56,7 +55,7 @@ class MovieRecommenderSetting:
 
     def loadSVDModel(self, filename):
         logger.info("Loading the Neural Network model")
-        model = pickle.load(open(filename, 'rb'))
+        model = joblib.load(open(filename, 'rb'))
         # _, model = dump.load('assets/SVDmodel2')
         return  model
     

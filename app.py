@@ -13,7 +13,6 @@ from tensorflow.keras import layers
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model
 from flask_caching import Cache
-import json
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
