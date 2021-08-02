@@ -9,6 +9,7 @@
 from math import sqrt
 import pandas as pd
 import numpy as np
+import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
@@ -16,9 +17,10 @@ class ContentBased:
     def __init__(self, moviesDF, ratingDF):
         self.moviesDF = moviesDF
         self.ratingDF = ratingDF
-        tfidf_movies_genres = TfidfVectorizer(token_pattern = '[a-zA-Z0-9\-]+')
-        tfidf_movies_genres_matrix = tfidf_movies_genres.fit_transform(self.moviesDF['genres'])
-        self.cosine_sim_movies = linear_kernel(tfidf_movies_genres_matrix, tfidf_movies_genres_matrix)
+        # tfidf_movies_genres = TfidfVectorizer(token_pattern = '[a-zA-Z0-9\-]+')
+        # tfidf_movies_genres_matrix = tfidf_movies_genres.fit_transform(self.moviesDF['genres'])
+        tfidf = joblib.load('tfidf.pkl')
+        self.cosine_sim_movies = linear_kernel(tfidf, tfidf)
 
     def get_recommendations_based_on_genres(self, movie_title, byTitle=True):
         """
