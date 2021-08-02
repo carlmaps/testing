@@ -8,8 +8,6 @@ import joblib
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model
 import logging
-from surprise import SVD
-from surprise import Dataset
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 EMBEDDING_SIZE = 50

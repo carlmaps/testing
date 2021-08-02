@@ -2,8 +2,6 @@ import pandas as pd
 import numpy as np
 from scipy.sparse.linalg import svds
 from flask_caching import Cache
-from surprise import SVD
-from surprise import Dataset
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
